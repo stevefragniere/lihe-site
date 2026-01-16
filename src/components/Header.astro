@@ -1,0 +1,115 @@
+---
+import "../styles/global.css";
+---
+
+<style>
+  header {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.4s ease;
+  }
+  header.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<header
+  id="main-header"
+  class="w-full fixed top-0 left-0 bg-white/90 backdrop-blur-md shadow-sm z-50 transition-all duration-300"
+>
+  <div class="max-w-6xl mx-auto flex items-center justify-between px-4 py-4">
+
+    <!-- LOGO -->
+    <a href="/" class="flex items-center space-x-2">
+      <img src="/assets/logo.png" alt="Lihé Logo" class="h-16 w-auto" />
+    </a>
+
+    <!-- MENU DESKTOP -->
+    <nav class="hidden md:flex space-x-6 items-center">
+      <!-- Soins sans sous-menu -->
+      <a href="/soins" class="hover:text-primary font-semibold">Soins</a>
+
+      <a href="/ateliers-enfants" class="hover:text-primary font-semibold">Ateliers enfants</a>
+      <a href="/a-propos" class="hover:text-primary font-semibold">À propos</a>
+
+      <!-- Instagram -->
+      <a
+        href="https://www.instagram.com/espace_lihe/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-center gap-1 hover:opacity-80 transition"
+        aria-label="Instagram Espace Lihé"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5">
+          <defs>
+            <linearGradient id="instaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#F58529" />
+              <stop offset="30%" stop-color="#DD2A7B" />
+              <stop offset="60%" stop-color="#8134AF" />
+              <stop offset="100%" stop-color="#515BD4" />
+            </linearGradient>
+          </defs>
+          <path
+            fill="url(#instaGradient)"
+            d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm5.5-.9a1.1 1.1 0 11-2.2 0 1.1 1.1 0 012.2 0z"
+          />
+        </svg>
+      </a>
+    </nav>
+
+    <!-- BURGER MENU -->
+    <button id="burger-btn" class="md:hidden flex flex-col gap-1.5">
+      <span class="block w-6 h-0.5 bg-textmain transition"></span>
+      <span class="block w-6 h-0.5 bg-textmain transition"></span>
+      <span class="block w-6 h-0.5 bg-textmain transition"></span>
+    </button>
+
+  </div>
+
+  <!-- MENU MOBILE -->
+  <div id="mobile-menu" class="hidden flex-col md:hidden bg-white/95 px-6 py-4 space-y-4 shadow-md">
+    <!-- Soins simplifié, plus de flèche -->
+    <a href="/soins" class="block text-lg hover:text-primary">Soins</a>
+
+    <a href="/ateliers-enfants" class="block text-lg hover:text-primary">Ateliers enfants</a>
+    <a href="/a-propos" class="block text-lg hover:text-primary">À propos</a>
+    <a href="/contact" class="block text-lg hover:text-primary">Contact</a>
+
+    <a href="https://www.instagram.com/espace_lihe/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1 hover:opacity-80 transition">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5">
+        <defs>
+          <linearGradient id="instaGradientMobile" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#F58529"/>
+            <stop offset="30%" stop-color="#DD2A7B"/>
+            <stop offset="60%" stop-color="#8134AF"/>
+            <stop offset="100%" stop-color="#515BD4"/>
+          </linearGradient>
+        </defs>
+        <path fill="url(#instaGradientMobile)" d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm5.5-.9a1.1 1.1 0 11-2.2 0 1.1 1.1 0 012.2 0z"/>
+      </svg>
+      <span class="text-sm font-medium text-primary">Espace Lihé</span>
+    </a>
+  </div>
+
+</header>
+
+<script client:load>
+  const header = document.getElementById("main-header");
+  requestAnimationFrame(() => header.classList.add("visible"));
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 50) {
+      header.classList.add("py-2", "shadow-md");
+    } else {
+      header.classList.remove("py-2");
+    }
+  });
+
+  const burger = document.getElementById("burger-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  burger.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+  });
+</script>

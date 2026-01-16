@@ -1,0 +1,39 @@
+---
+import "../styles/global.css";
+---
+
+<style>
+  header {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.4s ease;
+  }
+  header.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<footer class="fixed bottom-0 left-0 w-full bg-white shadow-inner py-3 px-6 z-50">
+  <div class="max-w-4xl mx-auto flex flex-col items-center space-y-2 text-center">
+
+    <!-- Ligne 1 : Contact + Instagram + Texte Espace Lihé sur la même ligne -->
+    <div class="flex items-center gap-4">
+
+      <!-- Bouton RDV plus petit -->
+      <a
+        href="/contact"
+        class="bg-primary text-white px-4 py-1 rounded-lg text-sm hover:bg-accent transition"
+      >
+        Contact & prise de rendez-vous
+      </a>
+
+    </div>
+
+    <!-- Ligne 3 : Copyright en vert -->
+    <p class="text-sm font-semibold textmain">
+      © 2025 Lihé
+    </p>
+
+  </div>
+</footer>

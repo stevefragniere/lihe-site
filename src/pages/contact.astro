@@ -1,0 +1,109 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+  <section class="max-w-4xl mx-auto py-16 px-4 space-y-12">
+
+    <!-- Titre -->
+    <h1 class="text-4xl font-bold text-textmain text-center">Contact & Réservation</h1>
+    <p class="text-lg text-center text-textmain">
+      Consultez nos disponibilités ci-dessous et réservez directement votre créneau, ou envoyez-nous un message.
+    </p>
+
+    <!-- Bouton Google Calendar popup -->
+    <div class="flex justify-center mt-8">
+      <div id="google-calendar-button" class="w-max"></div>
+      
+      <script type="module" client:load>
+        // Charger le CSS et le script de Google Calendar
+        const link = document.createElement('link');
+        link.href = "https://calendar.google.com/calendar/scheduling-button-script.css";
+        link.rel = "stylesheet";
+        document.head.appendChild(link);
+
+        const script = document.createElement('script');
+        script.src = "https://calendar.google.com/calendar/scheduling-button-script.js";
+        script.async = true;
+        document.body.appendChild(script);
+
+        script.onload = () => {
+          const target = document.getElementById('google-calendar-button');
+          calendar.schedulingButton.load({
+            url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ1eCgHZpI_Z_is0j86620ujqstW3yVYEjee0I3DK-YCPYSOiMH1Y2iV1gv7q7O0dxB6d8vwf2pq?gv=true',
+            color: '#D4AF37', // doré
+            label: 'Réserver un rendez-vous',
+            target,
+          });
+        };
+      </script>
+    </div>
+
+    <!-- Formulaire de contact avec fade-in/out -->
+    <div class="bg-white p-6 rounded-lg shadow-md mt-12">
+      <h2 class="text-2xl font-semibold text-textmain mb-4">Envoyez-nous un message</h2>
+      
+      <form id="contact-form" class="flex flex-col space-y-4">
+        <label class="font-medium">Nom :</label>
+        <input type="text" name="name" placeholder="Votre nom" required
+          class="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"/>
+
+        <label class="font-medium">Email :</label>
+        <input type="email" name="email" placeholder="Votre email" required
+          class="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"/>
+
+        <label class="font-medium">Message :</label>
+        <textarea name="message" rows="4" placeholder="Votre message"
+          class="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+
+        <button type="submit"
+          class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-accent transition">
+          Envoyer
+        </button>
+
+        <!-- Messages de confirmation -->
+        <p id="form-success" class="text-green-600 font-medium mt-4 opacity-0 transition-opacity duration-500">
+          Merci ! Votre message a été envoyé avec succès.
+        </p>
+        <p id="form-error" class="text-red-600 font-medium mt-4 opacity-0 transition-opacity duration-500">
+          Oups ! Une erreur est survenue, veuillez réessayer.
+        </p>
+      </form>
+
+      <script type="module" client:load>
+        const form = document.getElementById('contact-form');
+        const successMsg = document.getElementById('form-success');
+        const errorMsg = document.getElementById('form-error');
+
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          successMsg.style.opacity = 0;
+          errorMsg.style.opacity = 0;
+
+          const formData = new FormData(form);
+
+          try {
+            const response = await fetch('https://formspree.io/f/mwpgnelz', {
+              method: 'POST',
+              headers: { 'Accept': 'application/json' },
+              body: formData,
+            });
+
+            if (response.ok) {
+              form.reset();
+              successMsg.style.opacity = 1;
+              setTimeout(() => { successMsg.style.opacity = 0; }, 4000);
+            } else {
+              errorMsg.style.opacity = 1;
+              setTimeout(() => { errorMsg.style.opacity = 0; }, 4000);
+            }
+          } catch {
+            errorMsg.style.opacity = 1;
+            setTimeout(() => { errorMsg.style.opacity = 0; }, 4000);
+          }
+        });
+      </script>
+    </div>
+
+  </section>
+</Layout>

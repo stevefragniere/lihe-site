@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* texte global */
+body {
+  @apply text-textmain;
+}
+
+/* options pour logo en fond */
+.bg-logo {
+  @apply fixed inset-0 flex justify-center items-center pointer-events-none;
+  z-index: 0;
+}

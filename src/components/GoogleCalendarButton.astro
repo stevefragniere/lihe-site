@@ -1,0 +1,21 @@
+---
+const { url, color = '#D4AF37', label = 'Réserver un rendez-vous' } = Astro.props;
+---
+
+<div id="google-calendar-button-container"></div>
+
+<script is:inline>
+  const container = document.getElementById('google-calendar-button-container');
+  const script = document.createElement('script');
+  script.src = 'https://calendar.google.com/calendar/scheduling-button-script.js';
+  script.async = true;
+  script.onload = () => {
+    calendar.schedulingButton.load({
+      url: '{{url}}',
+      color: '{{color}}',
+      label: '{{label}}',
+      target: container,
+    });
+  };
+  document.head.appendChild(script);
+</script>
