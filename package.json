@@ -11,6 +11,9 @@
   "dependencies": {
     "astro": "^5.16.4"
   },
+  "engines": {
+    "node": "20.x"
+  },  
   "devDependencies": {
     "@astrojs/netlify": "^6.6.4",
     "@astrojs/tailwind": "^6.0.2",
