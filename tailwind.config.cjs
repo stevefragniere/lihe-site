@@ -12,4 +12,11 @@ module.exports = {
     },
   },
   plugins: [],
+  safelist: [
+    "hidden",
+    "flex",
+    "md:hidden",
+    "py-2",
+    "shadow-md"
+  ],
 };
