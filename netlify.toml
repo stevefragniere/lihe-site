@@ -1,6 +1,7 @@
 [build]
-  command = "npm run build"
-  publish = ""
+  command = "npm install && npm run build"
+  publish = "dist"
 
-[functions]
-  directory = "netlify/functions"
+[dev]
+  command = "npm run dev"
+  port = 3000
