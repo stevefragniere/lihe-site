@@ -4,29 +4,38 @@ import Layout from '../../../layouts/Layout.astro';
 
 <Layout>
   <section class="max-w-3xl mx-auto py-16 px-4 space-y-6 text-center">
+
     <h1 class="text-3xl font-bold">Massage Face & Foot</h1>
+
     <p class="text-lg">
       Ce massage vise à détendre le visage et les pieds pour un bien-être immédiat grâce aux petits Kansas, aux techniques manuelles et de réflexologies.
     </p>
-    <ul class="mx-auto w-fit text-lg space-y-2 text-left">
-        <li class="flex items-start gap-2">
-                <svg class="w-4 h-4 mt-1 text-primary" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 2C6 6 4 9 4 12a6 6 0 0012 0c0-3-2-6-6-10z"/>
-                </svg>
-            <span>Face : 120.- (60 minutes)</span>
-        </li>
-        <li class="flex items-start gap-2">
-                <svg class="w-4 h-4 mt-1 text-primary" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 2C6 6 4 9 4 12a6 6 0 0012 0c0-3-2-6-6-10z"/>
-                </svg>
-            <span>Foot : 120.- (60 minutes)</span>
-        </li>
-        <li class="flex items-start gap-2">
-                <svg class="w-4 h-4 mt-1 text-primary" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 2C6 6 4 9 4 12a6 6 0 0012 0c0-3-2-6-6-10z"/>
-                </svg>
-            <span>Pack Face & Foot : 160.- (90 minutes)</span>
-        </li>
-     </ul>
+
+    <!-- Tarifs avec logos centré, transparent, taille normale -->
+    <ul class="mx-auto w-fit text-lg space-y-6 mt-8 text-center">
+
+      <!-- Face -->
+      <li class="flex flex-col items-center gap-2">
+        <img src="/assets/face-logo.png" alt="Face Logo" class="w-20 h-20 transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg" />
+        <span class="text-lg font-medium">Face : 120.- (60 minutes)</span>
+      </li>
+
+      <!-- Foot -->
+      <li class="flex flex-col items-center gap-2">
+        <img src="/assets/foot-logo.png" alt="Foot Logo" class="w-20 h-20 transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg" />
+        <span class="text-lg font-medium">Foot : 120.- (60 minutes)</span>
+      </li>
+
+      <!-- Pack Face & Foot -->
+      <li class="flex flex-col items-center gap-2">
+        <div class="flex gap-4 justify-center">
+          <img src="/assets/face-logo.png" alt="Face Logo" class="w-20 h-20 transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg" />
+          <img src="/assets/foot-logo.png" alt="Foot Logo" class="w-20 h-20 transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg" />
+        </div>
+        <span class="text-lg font-medium">Pack Face & Foot : 160.- (90 minutes)</span>
+      </li>
+
+    </ul>
+
   </section>
 </Layout>

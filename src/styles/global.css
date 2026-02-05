@@ -12,3 +12,55 @@ body {
   @apply fixed inset-0 flex justify-center items-center pointer-events-none;
   z-index: 0;
 }
+
+/* =====================
+   BULLES
+===================== */
+.bubble {
+  @apply bg-white/70 backdrop-blur-md text-textmain px-4 py-2 rounded-full shadow-md text-sm;
+}
+
+/* =====================
+   FLOTTEMENT DOUX
+===================== */
+@keyframes floatSlow {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+.animate-float-slow {
+  animation: floatSlow 6s ease-in-out infinite;
+}
+
+/* delays pour animation (flottement) */
+.float-delay-200 { animation-delay: .2s; }
+.float-delay-300 { animation-delay: .3s; }
+.float-delay-500 { animation-delay: .5s; }
+.float-delay-700 { animation-delay: .7s; }
+.float-delay-1000 { animation-delay: 1s; }
+
+/* =====================
+   APPARITION AU SCROLL
+===================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px) scale(0.96);
+  transition:
+    opacity 1s ease,
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* delays pour apparition */
+.reveal-delay-100  { transition-delay: 0.3s; }
+.reveal-delay-200  { transition-delay: 0.6s; }
+.reveal-delay-300  { transition-delay: 0.9s; }
+.reveal-delay-400  { transition-delay: 1.2s; }
+.reveal-delay-500  { transition-delay: 1.5s; }
+.reveal-delay-600  { transition-delay: 1.8s; }
+.reveal-delay-700  { transition-delay: 2.1s; }

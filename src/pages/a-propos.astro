@@ -1,17 +1,160 @@
 ---
 import Layout from '../layouts/Layout.astro';
 ---
+<script is:inline>
+  window.addEventListener('DOMContentLoaded', () => {
+    const items = document.querySelectorAll('.reveal');
+
+    if (!items.length) return;
+
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    items.forEach(el => observer.observe(el));
+  });
+</script>
 
 <Layout>
   <section class="max-w-4xl mx-auto py-16 px-4 space-y-6 text-center">
+
     <h1 class="text-4xl font-bold">À propos de Lihé</h1>
+
     <p class="text-lg">
-      Lihé est un espace dédié au bien-être, offrant des massages et soins énergétiques personnalisés.
-      Notre objectif est de vous aider à retrouver équilibre, détente et vitalité.
+      Lihé est un espace dédié au bien-être et au retour à soi pour petits et grands.
     </p>
     <p class="text-lg">
-      Nos praticiens sont formés aux dernières techniques de relaxation et de rééquilibrage énergétique,
-      pour un accompagnement sur mesure.
+      Mon objectif est de vous aider à retrouver équilibre intérieur, détente et confiance.
     </p>
+
+    <!-- ===== DESKTOP ===== -->
+  <div class="relative my-12 hidden md:flex justify-center">
+    <div class="relative w-[600px] h-[600px]">
+
+      <!-- Photo centrale -->
+      <img
+        src="/assets/lele.png"
+        alt="Lele"
+        class="absolute inset-0 m-auto w-72 h-72 rounded-full object-cover border-4 border-secondary shadow-lg z-10"
+      />
+
+      <!-- Ligne du haut : bulle centrée -->
+      <div class="absolute top-8 left-1/2 -translate-x-4 z-20 translate-y-20">
+        <div class="bubble w-fit max-w-xs animate-float-slow">
+          Formée en <strong>magnétisme & soins énergétiques</strong> avec "Au coeur de l'énergie."
+        </div>
+      </div>
+
+      <!-- Ligne intermédiaire gauche -->
+  <div class="absolute top-24 left-0 z-30 translate-y-8 -translate-x-32">
+    <div class="bubble w-fit max-w-[360px] break-words animate-float-slow float-delay-300">
+              Moi c'est <strong>Evelyne</strong>, maman et enseignante primaire depuis une petite dizaine d'années. Formée au harcèlement scolaire et à la pédagogie positive, j'entreprends une prochaine formation en yoga et méditations pour enfants.
+    </div>
+  </div>
+
+      <!-- Ligne intermédiaire droite (descendue) -->
+      <div class="absolute top-48 right-0 z-30 -translate-x-1 translate-y-10">
+        <div class="bubble w-fit max-w-[220px] animate-float-slow float-delay-500">
+          Formée en <strong>médiumnité</strong> avec Céline Palmilha et Christine Savoy.
+        </div>
+      </div>
+
+      <!-- Ligne du bas gauche -->
+      <div class="absolute bottom-44 left-4 z-20 -translate-y-8 -translate-x-8">
+        <div class="bubble w-fit max-w-[200px] animate-float-slow float-delay-700">
+          Mettre de <strong>la lumière et de la bienveillance</strong> dans les liens est au coeur de ma démarche.
+        </div>
+      </div>
+
+      <!-- Ligne du bas droite (celle à monter) -->
+      <div class="absolute bottom-32 right-1 z-10 translate-x-[20px] -translate-y-[30px]">
+        <div class="bubble w-fit max-w-[200px] animate-float-slow float-delay-1000">
+          Formée aux <strong>massages Shinzu</strong> chez Harmonis avec Sylvie Forestier.
+        </div>
+      </div>
+
+      <!-- Ligne la plus basse : bulle centrée -->
+  <div class="absolute bottom-24 left-[10%] z-20 translate-y-8">
+    <div class="bubble w-fit max-w-xs animate-float-slow float-delay-200">
+      <strong>Lihé</strong> ? Un mélange entre : <strong>Libellule</strong> symbole de légèreté, de joie, de renaissance et de pont entre l'émotionnel et le spirituel et <strong>Hélène</strong> prénom qui me tient à coeur et qui signifie lumière.
+    </div>
+  </div>
+
+
+    </div>
+  </div>
+
+
+
+
+   <!-- ===== MOBILE ===== -->
+<div class="md:hidden my-16 flex flex-col items-center space-y-6">
+
+  <!-- Ligne 1 : bulle centrée -->
+  <div class="reveal delay-100 w-full flex justify-center">
+    <div class="bubble w-fit max-w-[360px] break-words text-center">
+      Moi c'est <strong>Evelyne</strong>, maman et enseignante primaire depuis une petite dizaine d'années. Formée au harcèlement scolaire et à la pédagogie positive, j'entreprends une prochaine formation en yoga et méditations pour enfants.
+    </div>
+  </div>
+
+  <!-- Ligne 2 : deux bulles -->
+  <div class="flex justify-between gap-4 w-full max-w-sm">
+    <div class="reveal delay-200">
+      <div class="bubble w-fit max-w-[180px] break-words text-center">
+        Formée en <strong>magnétisme & soins énergétiques</strong> avec "Au coeur de l'énergie."
+      </div>
+    </div>
+    <div class="reveal delay-300">
+      <div class="bubble w-fit max-w-[180px] break-words text-center">
+        Formée en <strong>médiumnité</strong> avec Céline Palmilha et Christine Savoy.
+      </div>
+    </div>
+  </div>
+
+  <!-- Photo centrée -->
+  <div class="reveal delay-400 flex justify-center w-full">
+    <img
+      src="/assets/lele.png"
+      alt="Lele"
+      class="w-60 h-60 rounded-full object-cover border-4 border-secondary shadow-lg"
+    />
+  </div>
+
+  <!-- Ligne 3 : deux bulles -->
+  <div class="flex justify-between gap-4 w-full max-w-sm mt-4">
+    <div class="reveal delay-500">
+      <div class="bubble w-fit max-w-[180px] break-words text-center">
+        Mettre de <strong>la lumière et de la bienveillance</strong> dans les liens est au coeur de ma démarche.
+      </div>
+    </div>
+    <div class="reveal delay-600">
+      <div class="bubble w-fit max-w-[180px] break-words text-center">
+        Formée aux <strong>massages Shinzu</strong> chez Harmonis avec Sylvie Forestier.
+      </div>
+    </div>
+  </div>
+
+  <!-- Ligne 4 : bulle centrée -->
+  <div class="reveal delay-700 w-full flex justify-center">
+    <div class="bubble w-fit max-w-[360px] break-words text-center">
+      <strong>Lihé</strong> ? Un mélange entre : <strong>Libellule</strong> symbole de légèreté, de joie, de renaissance et de pont entre l'émotionnel et le spirituel et <strong>Hélène</strong> prénom qui me tient à coeur et qui signifie lumière.
+    </div>
+  </div>
+
+</div>
+
+
+</div>
+
+
+
   </section>
 </Layout>

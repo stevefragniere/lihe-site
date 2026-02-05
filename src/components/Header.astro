@@ -28,19 +28,8 @@ import "../styles/global.css";
     <!-- MENU DESKTOP -->
     <nav class="hidden md:flex space-x-6 items-center">
 
-      <div class="relative group focus-within">
-        <a href="/soins" class="hover:text-primary font-semibold">Soins</a>
-        <div class="absolute top-full left-0 bg-white shadow-md mt-0 hidden group-hover:block min-w-[220px] z-10">
-          <ul class="flex flex-col">
-            <li class="border-b">
-              <a href="/soins/massage-shinzu" class="block px-4 py-2 hover:bg-secondary">Massage Shinzu</a>
-            </li>
-            <li>
-              <a href="/soins/soins-energetiques" class="block px-4 py-2 hover:bg-secondary">Soins énergétiques et magnétiques</a>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <a href="/soins" class="hover:text-primary font-semibold">Soins</a>
+
 
       <a href="/ateliers-enfants" class="hover:text-primary font-semibold">Ateliers enfants</a>
       <a href="/a-propos" class="hover:text-primary font-semibold">À propos</a>
@@ -83,24 +72,9 @@ import "../styles/global.css";
  <!-- MENU MOBILE -->
 <div id="mobile-menu" class="hidden flex-col md:hidden bg-white/95 px-6 py-4 space-y-4 shadow-md">
 
-  <!-- Soins avec sous-menu -->
-  <ul>
-    <li>
-      <span class="block px-2 py-1 text-lg font-semibold">Soins</span>
-      <ul class="pl-4 mt-1 space-y-1">
-        <li>
-          <a href="/soins/massage-shinzu" class="block px-2 py-1 text-lg hover:bg-secondary">
-            Massage Shinzu
-          </a>
-        </li>
-        <li>
-          <a href="/soins/soins-energetiques" class="block px-2 py-1 text-lg hover:bg-secondary">
-            Soins énergétiques et magnétiques
-          </a>
-        </li>
-      </ul>
-    </li>
-  </ul>
+  <!-- Soins -->
+  <a href="/soins" class="block text-lg hover:text-primary">Soins</a>
+
 
   <a href="/ateliers-enfants" class="block text-lg hover:text-primary">Ateliers enfants</a>
   <a href="/a-propos" class="block text-lg hover:text-primary">À propos</a>
