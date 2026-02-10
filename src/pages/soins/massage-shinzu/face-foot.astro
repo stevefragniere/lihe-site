@@ -8,7 +8,7 @@ import Layout from '../../../layouts/Layout.astro';
     <h1 class="text-3xl font-bold">Massage Face & Foot</h1>
 
     <p class="text-lg">
-      Ce massage vise à détendre le visage et les pieds pour un bien-être immédiat grâce aux petits Kansas, aux techniques manuelles et de réflexologies.
+      Ce massage vise à détendre le visage et les pieds pour un bien-être immédiat grâce aux petits Kansas, aux techniques manuelles et à la réflexologie.
     </p>
 
     <!-- Tarifs avec logos centré, transparent, taille normale -->
@@ -17,23 +17,40 @@ import Layout from '../../../layouts/Layout.astro';
       <!-- Face -->
       <li class="flex flex-col items-center gap-2">
         <img src="/assets/face-logo.png" alt="Face Logo" class="w-20 h-20 transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg" />
-        <span class="text-lg font-medium">Face : 120.- (60 minutes)</span>
+        <span class="text-lg font-medium">Face : 100.- (50 minutes)</span>
       </li>
 
       <!-- Foot -->
       <li class="flex flex-col items-center gap-2">
         <img src="/assets/foot-logo.png" alt="Foot Logo" class="w-20 h-20 transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg" />
-        <span class="text-lg font-medium">Foot : 120.- (60 minutes)</span>
+        <span class="text-lg font-medium">Foot : 100.- (50 minutes)</span>
       </li>
 
       <!-- Pack Face & Foot -->
       <li class="flex flex-col items-center gap-2">
-        <div class="flex gap-4 justify-center">
+        <div class="flex gap-4 justify-center items-center">
           <img src="/assets/face-logo.png" alt="Face Logo" class="w-20 h-20 transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg" />
+          <span class="mx-2 font-medium">&</span> <!-- centré verticalement -->
           <img src="/assets/foot-logo.png" alt="Foot Logo" class="w-20 h-20 transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg" />
         </div>
-        <span class="text-lg font-medium">Pack Face & Foot : 160.- (90 minutes)</span>
+        <span class="text-lg font-medium">Pack Face & Foot : 145.- (90 minutes)</span>
       </li>
+    <!-- Pack Face ou Foot  & soin énergétique-->
+    <li class="flex flex-col items-center gap-2">
+      <div class="flex gap-4 justify-center items-center">
+        <img src="/assets/face-logo.png" alt="Face Logo" class="w-20 h-20 transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg" />
+
+        <span class="mx-2 font-medium">ou</span> <!-- centré verticalement -->
+
+        <img src="/assets/foot-logo.png" alt="Foot Logo" class="w-20 h-20 transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg" />
+
+        <span class="mx-2 font-medium">&</span> <!-- centré verticalement -->
+
+
+        <img src="/assets/logo.png" alt="Logo Lihé" class="w-23 h-20 transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg" />
+      </div>
+      <span class="text-lg font-medium">Massage Face ou Foot & Soin énergétique: 120.- (90 minutes)</span>
+    </li>
 
     </ul>
 
