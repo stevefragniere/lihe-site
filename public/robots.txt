@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://lihe.ch/sitemap.xml
+Sitemap: https://lihe.ch/sitemap-index.xml
