@@ -7,41 +7,132 @@ import Layout from '../layouts/Layout.astro';
 
     <!-- Titre -->
     <h1 class="text-4xl font-bold text-textmain text-center">Contact & Réservation</h1>
-    <p class="text-lg text-center text-textmain">
-      Consultez nos disponibilités ci-dessous et réservez directement votre créneau, ou envoyez-nous un message.
-    </p>
 
-    <!-- Bouton Google Calendar popup -->
-    <div class="flex justify-center mt-8">
-      <div id="google-calendar-button" class="w-max"></div>
-      
-      <script type="module" client:load>
-        // Charger le CSS et le script de Google Calendar
-        const link = document.createElement('link');
-        link.href = "https://calendar.google.com/calendar/scheduling-button-script.css";
-        link.rel = "stylesheet";
-        document.head.appendChild(link);
+    <!-- ===== SECTION PRISE DE RENDEZ-VOUS (SOINS) ===== -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <p class="text-lg text-center text-textmain mb-6">
+        Pour un soin, consultez mes disponibilités ci-dessous. Vous pouvez réserver directement un créneau. Si aucun ne vous convient n'hésitez pas à me contacter, nous trouverons une solution.
+      </p>
 
-        const script = document.createElement('script');
-        script.src = "https://calendar.google.com/calendar/scheduling-button-script.js";
-        script.async = true;
-        document.body.appendChild(script);
+      <!-- Prise de rendez-vous (soins) -->
+      <div class="flex justify-center">
+        <div id="google-calendar-button" class="w-max"></div>
+        
+        <script type="module" client:load>
+          // Charger le CSS et le script de Google Calendar
+          const link = document.createElement('link');
+          link.href = "https://calendar.google.com/calendar/scheduling-button-script.css";
+          link.rel = "stylesheet";
+          document.head.appendChild(link);
 
-        script.onload = () => {
-          const target = document.getElementById('google-calendar-button');
-          calendar.schedulingButton.load({
-            url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ1eCgHZpI_Z_is0j86620ujqstW3yVYEjee0I3DK-YCPYSOiMH1Y2iV1gv7q7O0dxB6d8vwf2pq?gv=true',
-            color: '#D4AF37', // doré
-            label: 'Réserver un rendez-vous',
-            target,
-          });
-        };
-      </script>
+          const script = document.createElement('script');
+          script.src = "https://calendar.google.com/calendar/scheduling-button-script.js";
+          script.async = true;
+          document.body.appendChild(script);
+
+          script.onload = () => {
+            const target = document.getElementById('google-calendar-button');
+            calendar.schedulingButton.load({
+              url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ1eCgHZpI_Z_is0j86620ujqstW3yVYEjee0I3DK-YCPYSOiMH1Y2iV1gv7q7O0dxB6d8vwf2pq?gv=true',
+              color: '#D4AF37', // doré
+              label: 'Réserver un soin',
+              target,
+            });
+          };
+        </script>
+      </div>
     </div>
 
-    <!-- Formulaire de contact avec fade-in/out -->
-    <div class="bg-white p-6 rounded-lg shadow-md mt-12">
-      <h2 class="text-2xl font-semibold text-textmain mb-4">Envoyez-nous un message</h2>
+    <!-- ===== SECTION RÉSERVATION ATELIERS ===== -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-3xl font-bold text-textmain mb-6">Réserver un atelier enfant</h2>
+      
+      <form id="atelier-form" class="flex flex-col space-y-6">
+        
+        <!-- Sélection des ateliers -->
+        <div>
+          <label class="font-semibold text-lg mb-4 block">Sélectionnez l'atelier (ou plusieurs) :</label>
+          
+          <div class="space-y-3">
+            <label class="flex items-center space-x-3 cursor-pointer p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+              <input type="checkbox" name="ateliers" value="je m'écoute" class="w-5 h-5 cursor-pointer"/>
+              <span class="text-textmain font-medium">Atelier "Je m'écoute" (mercredi 29 avril 2026)</span>
+            </label>
+
+            <label class="flex items-center space-x-3 cursor-pointer p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+              <input type="checkbox" name="ateliers" value="super héros" class="w-5 h-5 cursor-pointer"/>
+              <span class="text-textmain font-medium">Atelier "Super Héros" (mercredi 27 mai 2026)</span>
+            </label>
+
+            <label class="flex items-center space-x-3 cursor-pointer p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+              <input type="checkbox" name="ateliers" value="rentrée apaisée 17" class="w-5 h-5 cursor-pointer"/>
+              <span class="text-textmain font-medium">Atelier "Une rentrée apaisée" (lundi 17 août 2026)</span>
+            </label>
+
+            <label class="flex items-center space-x-3 cursor-pointer p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+              <input type="checkbox" name="ateliers" value="rentrée apaisée 18" class="w-5 h-5 cursor-pointer"/>
+              <span class="text-textmain font-medium">Atelier "Une rentrée apaisée" (mardi 18 août 2026)</span>
+            </label>
+          </div>
+
+          <p id="ateliers-error" class="text-red-600 text-sm mt-2 opacity-0 transition-opacity">
+            Veuillez sélectionner au moins un atelier
+          </p>
+        </div>
+
+        <!-- Informations de contact -->
+        <div class="space-y-4">
+          <div>
+            <label class="font-medium block mb-2">Prénom de l'enfant :</label>
+            <input type="text" name="child_name" placeholder="Prénom de l'enfant" required
+              class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"/>
+          </div>
+
+          <div>
+            <label class="font-medium block mb-2">Âge de l'enfant :</label>
+            <input type="number" name="child_age" placeholder="Âge" min="4" max="15" required
+              class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"/>
+          </div>
+
+          <div>
+            <label class="font-medium block mb-2">Votre nom :</label>
+            <input type="text" name="parent_name" placeholder="Votre nom" required
+              class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"/>
+          </div>
+
+          <div>
+            <label class="font-medium block mb-2">Email :</label>
+            <input type="email" name="email" placeholder="Votre email" required
+              class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"/>
+          </div>
+
+          <div>
+            <label class="font-medium block mb-2">Message (optionnel) :</label>
+            <textarea name="message" rows="3" placeholder="Des questions ou commentaires ?"
+              class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+          </div>
+        </div>
+
+        <div class="flex justify-center">
+          <button type="submit"
+            class="bg-primary text-black px-6 py-2 rounded-lg hover:opacity-90 transition font-semibold">
+            Réserver l'atelier
+          </button>
+        </div>
+
+        <!-- Messages de confirmation -->
+        <p id="atelier-success" class="text-green-600 font-medium opacity-0 transition-opacity duration-500">
+          Merci ! Votre réservation a été envoyée avec succès.
+        </p>
+        <p id="atelier-error-msg" class="text-red-600 font-medium opacity-0 transition-opacity duration-500">
+          Oups ! Une erreur est survenue, veuillez réessayer.
+        </p>
+      </form>
+    </div>
+
+    <!-- ===== FORMULAIRE DE CONTACT GÉNÉRAL ===== -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-3xl font-bold text-textmain mb-6">Envoyez-moi un message général</h2>
       
       <form id="contact-form" class="flex flex-col space-y-4">
         <label class="font-medium">Nom :</label>
@@ -56,10 +147,12 @@ import Layout from '../layouts/Layout.astro';
         <textarea name="message" rows="4" placeholder="Votre message"
           class="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
 
-        <button type="submit"
-          class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-accent transition">
-          Envoyer
-        </button>
+        <div class="flex justify-center">
+          <button type="submit"
+            class="bg-primary text-black px-6 py-2 rounded-lg hover:opacity-90 transition font-semibold">
+            Envoyer
+          </button>
+        </div>
 
         <!-- Messages de confirmation -->
         <p id="form-success" class="text-green-600 font-medium mt-4 opacity-0 transition-opacity duration-500">
@@ -106,4 +199,91 @@ import Layout from '../layouts/Layout.astro';
     </div>
 
   </section>
+
+  <script type="module" client:load>
+    const atelierForm = document.getElementById('atelier-form');
+    const ateliersCheckboxes = document.querySelectorAll('input[name="ateliers"]');
+    const ateliersError = document.getElementById('ateliers-error');
+    const atelierSuccess = document.getElementById('atelier-success');
+    const atelierErrorMsg = document.getElementById('atelier-error-msg');
+
+    atelierForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // Vérifier si au moins un atelier est sélectionné
+      const selectedAteliers = Array.from(ateliersCheckboxes).filter(cb => cb.checked);
+      
+      if (selectedAteliers.length === 0) {
+        ateliersError.style.opacity = 1;
+        setTimeout(() => { ateliersError.style.opacity = 0; }, 3000);
+        return;
+      }
+
+      atelierSuccess.style.opacity = 0;
+      atelierErrorMsg.style.opacity = 0;
+      ateliersError.style.opacity = 0;
+
+      const formData = new FormData(atelierForm);
+      
+      // Construire le message avec les ateliers sélectionnés
+      const ateliersSelected = selectedAteliers.map(cb => cb.value).join(', ');
+      const childName = formData.get('child_name');
+      const childAge = formData.get('child_age');
+      const parentName = formData.get('parent_name');
+      const email = formData.get('email');
+      const message = formData.get('message');
+
+      const emailContent = `
+Réservation d'atelier enfant
+
+Ateliers sélectionnés: ${ateliersSelected}
+
+Informations enfant:
+- Prénom: ${childName}
+- Âge: ${childAge} ans
+
+Informations parent:
+- Nom: ${parentName}
+- Email: ${email}
+
+Message: ${message || 'Aucun'}
+      `;
+
+      try {
+        const response = await fetch('https://formspree.io/f/mwpgnelz', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(Object.assign(document.createElement('form'), {
+            name: parentName,
+            email: email,
+            message: emailContent
+          }))
+        });
+
+        // Créer manuellement la requête avec les bonnes données
+        const manualFormData = new FormData();
+        manualFormData.append('name', parentName);
+        manualFormData.append('email', email);
+        manualFormData.append('message', emailContent);
+
+        const response2 = await fetch('https://formspree.io/f/mwpgnelz', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: manualFormData,
+        });
+
+        if (response2.ok) {
+          atelierForm.reset();
+          atelierSuccess.style.opacity = 1;
+          setTimeout(() => { atelierSuccess.style.opacity = 0; }, 4000);
+        } else {
+          atelierErrorMsg.style.opacity = 1;
+          setTimeout(() => { atelierErrorMsg.style.opacity = 0; }, 4000);
+        }
+      } catch {
+        atelierErrorMsg.style.opacity = 1;
+        setTimeout(() => { atelierErrorMsg.style.opacity = 0; }, 4000);
+      }
+    });
+  </script>
 </Layout>

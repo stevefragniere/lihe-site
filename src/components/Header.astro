@@ -4,13 +4,16 @@ import "../styles/global.css";
 
 <style>
   header {
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: all 0.4s ease;
-  }
-  header.visible {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  #pdf-canvas {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
   }
 </style>
 
@@ -18,19 +21,35 @@ import "../styles/global.css";
   id="main-header"
   class="w-full fixed top-0 left-0 bg-white/90 backdrop-blur-md shadow-sm z-50 transition-all duration-300"
 >
-  <div class="max-w-6xl mx-auto flex items-center justify-between px-4 py-4">
+  <div class="max-w-6xl mx-auto flex items-center px-4 py-4 relative">
 
-    <!-- LOGO -->
+    <!-- LOGO (gauche) -->
     <a href="/" class="flex items-center space-x-2">
       <img src="/assets/logo.png" alt="Lihé Logo" class="h-16 w-auto" />
     </a>
 
-    <!-- MENU DESKTOP -->
+    <!-- POPUP BULLE CENTRÉE (vraiment au milieu) -->
+    <div class="absolute left-1/2 -translate-x-1/2">
+      <button
+        id="open-pdf-btn"
+        class="group inline-flex items-center justify-center animate-float-slow cursor-pointer"
+      >
+        <!-- Contenu bulle avec style global -->
+        <div class="bubble group-hover:shadow-lg transition-shadow px-10 py-5">
+          <div class="text-center whitespace-nowrap">
+            <p class="text-base font-bold text-primary">✨ Nouveau ✨</p>
+            <p class="text-base font-semibold">Ateliers enfants</p>
+          </div>
+        </div>
+      </button>
+    </div>
+
+    <!-- SPACER pour pousser le reste à droite -->
+    <div class="flex-1"></div>
+
+    <!-- MENU DESKTOP (droite) -->
     <nav class="hidden md:flex space-x-6 items-center">
-
       <a href="/soins" class="hover:text-primary font-semibold">Soins</a>
-
-
       <a href="/ateliers-enfants" class="hover:text-primary font-semibold">Ateliers enfants</a>
       <a href="/a-propos" class="hover:text-primary font-semibold">À propos</a>
 
@@ -57,64 +76,282 @@ import "../styles/global.css";
           />
         </svg>
       </a>
-
     </nav>
 
     <!-- BURGER MENU -->
-    <button id="burger-btn" class="md:hidden flex flex-col gap-1.5">
-        <span class="block w-6 h-0.5 bg-textmain transition"></span>
-        <span class="block w-6 h-0.5 bg-textmain transition"></span>
-        <span class="block w-6 h-0.5 bg-textmain transition"></span>
+    <button id="burger-btn" class="md:hidden flex flex-col gap-1.5 relative z-40">
+      <span class="block w-6 h-0.5 bg-textmain transition"></span>
+      <span class="block w-6 h-0.5 bg-textmain transition"></span>
+      <span class="block w-6 h-0.5 bg-textmain transition"></span>
     </button>
 
   </div>
 
- <!-- MENU MOBILE -->
-<div id="mobile-menu" class="hidden flex-col md:hidden bg-white/95 px-6 py-4 space-y-4 shadow-md">
+  <!-- MENU MOBILE -->
+  <div id="mobile-menu" class="hidden fixed top-24 right-4 flex-col md:hidden bg-white/95 px-6 py-4 space-y-4 shadow-lg z-40 rounded-lg backdrop-blur-md w-48">
+    <a href="/soins" class="block text-lg hover:text-primary">Soins</a>
+    <a href="/ateliers-enfants" class="block text-lg hover:text-primary">Ateliers enfants</a>
+    <a href="/a-propos" class="block text-lg hover:text-primary">À propos</a>
+    <a href="/contact" class="block text-lg hover:text-primary">Contact</a>
 
-  <!-- Soins -->
-  <a href="/soins" class="block text-lg hover:text-primary">Soins</a>
-
-
-  <a href="/ateliers-enfants" class="block text-lg hover:text-primary">Ateliers enfants</a>
-  <a href="/a-propos" class="block text-lg hover:text-primary">À propos</a>
-  <a href="/contact" class="block text-lg hover:text-primary">Contact</a>
-
-  <a href="https://www.instagram.com/espace_lihe/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1 hover:opacity-80 transition">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5">
-      <defs>
-        <linearGradient id="instaGradientMobile" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#F58529"/>
-          <stop offset="30%" stop-color="#DD2A7B"/>
-          <stop offset="60%" stop-color="#8134AF"/>
-          <stop offset="100%" stop-color="#515BD4"/>
-        </linearGradient>
-      </defs>
-      <path fill="url(#instaGradientMobile)" d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm5.5-.9a1.1 1.1 0 11-2.2 0 1.1 1.1 0 012.2 0z"/>
-    </svg>
-    <span class="text-sm font-medium text-primary">Espace Lihé</span>
-  </a>
-
-</div>
+    <a href="https://www.instagram.com/espace_lihe/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1 hover:opacity-80 transition">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5">
+        <defs>
+          <linearGradient id="instaGradientMobile" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#F58529"/>
+            <stop offset="30%" stop-color="#DD2A7B"/>
+            <stop offset="60%" stop-color="#8134AF"/>
+            <stop offset="100%" stop-color="#515BD4"/>
+          </linearGradient>
+        </defs>
+        <path fill="url(#instaGradientMobile)" d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm5.5-.9a1.1 1.1 0 11-2.2 0 1.1 1.1 0 012.2 0z"/>
+      </svg>
+      <span class="text-sm font-medium text-primary">Espace Lihé</span>
+    </a>
+  </div>
 
 </header>
 
+<!-- MODAL PDF -->
+<div id="pdf-modal" class="hidden fixed top-20 left-0 right-0 bottom-20 bg-black/50 z-50 flex items-center justify-center px-4">
+  <div class="bg-white rounded-lg shadow-2xl w-full max-w-4xl h-full max-h-[calc(100vh-180px)] flex flex-col">
+    <!-- Header du modal -->
+    <div class="flex items-center justify-between p-4 border-b flex-shrink-0">
+      <h2 class="text-xl font-semibold text-textmain">Ateliers Enfants</h2>
+      <button id="close-pdf-btn" class="text-xl font-bold text-gray-500 hover:text-textmain transition">
+        ✕
+      </button>
+    </div>
+    
+    <!-- Contenu PDF avec navigation -->
+    <div id="pdf-container" class="flex-1 overflow-hidden flex flex-col items-center justify-center bg-gray-100 relative">
+      <div id="pdf-loading" class="flex items-center justify-center h-full">
+        <p class="text-textmain font-semibold">Chargement du PDF...</p>
+      </div>
+      <canvas id="pdf-canvas" class="max-h-full max-w-full object-contain"></canvas>
+      
+      <!-- Boutons de navigation (Desktop) -->
+      <button id="prev-page" class="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 bg-primary text-white rounded-full w-12 h-12 items-center justify-center hover:opacity-90 transition">
+        ←
+      </button>
+      <button id="next-page" class="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 bg-primary text-white rounded-full w-12 h-12 items-center justify-center hover:opacity-90 transition">
+        →
+      </button>
+
+      <!-- Boutons de navigation (Mobile) -->
+      <button id="prev-page-mobile" class="md:hidden absolute bottom-4 left-4 bg-primary text-white rounded-full w-10 h-10 flex items-center justify-center hover:opacity-90 transition text-lg">
+        ←
+      </button>
+      <button id="next-page-mobile" class="md:hidden absolute bottom-4 right-4 bg-primary text-white rounded-full w-10 h-10 flex items-center justify-center hover:opacity-90 transition text-lg">
+        →
+      </button>
+    </div>
+
+    <!-- Footer du modal -->
+    <div class="flex items-center justify-between p-4 border-t bg-gray-50 flex-shrink-0">
+      <a
+        id="download-pdf-btn"
+        href="/ateliers-enfants-1.pdf"
+        download="ateliers-enfants.pdf"
+        class="px-4 py-2 bg-primary text-white rounded-lg hover:opacity-90 transition font-semibold text-sm md:text-base"
+      >
+        Télécharger
+      </a>
+      <p class="text-xs md:text-sm text-gray-600"><span id="page-info">Page 1</span></p>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" is:inline></script>
 <script client:load>
-  const header = document.getElementById("main-header");
-  requestAnimationFrame(() => header.classList.add("visible"));
+  // Attendre que PDF.js soit chargé
+  const waitForPdfJs = () => {
+    return new Promise((resolve) => {
+      if (typeof pdfjsLib !== 'undefined') {
+        resolve();
+      } else {
+        const checkInterval = setInterval(() => {
+          if (typeof pdfjsLib !== 'undefined') {
+            clearInterval(checkInterval);
+            resolve();
+          }
+        }, 100);
+      }
+    });
+  };
 
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 50) {
-      header.classList.add("py-2", "shadow-md");
-    } else {
-      header.classList.remove("py-2");
+  waitForPdfJs().then(() => {
+    // Configuration PDF.js
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    // Gestion du header
+    const burger = document.getElementById("burger-btn");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    burger.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+    });
+
+    window.addEventListener("scroll", () => {
+      const header = document.getElementById("main-header");
+      if (window.scrollY > 50) {
+        header.classList.add("py-2", "shadow-md");
+      } else {
+        header.classList.remove("py-2");
+      }
+    });
+
+    // Gestion du PDF modal
+    const openPdfBtn = document.getElementById("open-pdf-btn");
+    const closePdfBtn = document.getElementById("close-pdf-btn");
+    const pdfModal = document.getElementById("pdf-modal");
+    const pdfCanvas = document.getElementById("pdf-canvas");
+    const pdfLoading = document.getElementById("pdf-loading");
+    const prevPageBtn = document.getElementById("prev-page");
+    const nextPageBtn = document.getElementById("next-page");
+    const pageInfo = document.getElementById("page-info");
+
+    let pdfDoc = null;
+    let currentPage = 1;
+
+    async function renderPage(pageNum) {
+      try {
+        if (!pdfDoc) return;
+        
+        const page = await pdfDoc.getPage(pageNum);
+        const viewport = page.getViewport({ scale: 2 });
+        
+        pdfCanvas.width = viewport.width;
+        pdfCanvas.height = viewport.height;
+        
+        const context = pdfCanvas.getContext("2d");
+        await page.render({ canvasContext: context, viewport: viewport }).promise;
+        
+        // Mettre à jour les infos et boutons
+        pageInfo.textContent = `Page ${pageNum} / ${pdfDoc.numPages}`;
+        prevPageBtn.disabled = pageNum === 1;
+        nextPageBtn.disabled = pageNum === pdfDoc.numPages;
+        prevPageBtn.style.opacity = pageNum === 1 ? "0.5" : "1";
+        nextPageBtn.style.opacity = pageNum === pdfDoc.numPages ? "0.5" : "1";
+        
+        currentPage = pageNum;
+      } catch (error) {
+        console.error("Erreur lors du rendu de la page:", error);
+      }
     }
-  });
 
-  const burger = document.getElementById("burger-btn");
-  const mobileMenu = document.getElementById("mobile-menu");
+    async function loadPDF() {
+      try {
+        pdfLoading.style.display = "flex";
+        pdfCanvas.style.display = "none";
+        
+        const pdfUrl = "/ateliers-enfants-1.pdf";
+        console.log("Chargement du PDF depuis:", pdfUrl);
+        
+        pdfDoc = await pdfjsLib.getDocument(pdfUrl).promise;
+        console.log("PDF chargé, nombre de pages:", pdfDoc.numPages);
+        
+        pdfLoading.style.display = "none";
+        pdfCanvas.style.display = "block";
+        
+        // Afficher la première page
+        await renderPage(1);
+      } catch (error) {
+        console.error("Erreur lors du chargement du PDF:", error);
+        pdfLoading.innerHTML = '<p class="text-red-500">Erreur: ' + error.message + '</p>';
+      }
+    }
 
-  burger.addEventListener("click", () => {
-    mobileMenu.classList.toggle("hidden");
+    openPdfBtn.addEventListener("click", () => {
+      pdfModal.classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+      if (!pdfDoc) {
+        loadPDF();
+      }
+    });
+
+    closePdfBtn.addEventListener("click", () => {
+      pdfModal.classList.add("hidden");
+      document.body.style.overflow = "auto";
+    });
+
+    // Navigation par flèches
+    prevPageBtn.addEventListener("click", () => {
+      if (currentPage > 1) {
+        renderPage(currentPage - 1);
+      }
+    });
+
+    nextPageBtn.addEventListener("click", () => {
+      if (currentPage < pdfDoc.numPages) {
+        renderPage(currentPage + 1);
+      }
+    });
+
+    // Navigation mobile (boutons)
+    const prevPageMobileBtn = document.getElementById("prev-page-mobile");
+    const nextPageMobileBtn = document.getElementById("next-page-mobile");
+
+    prevPageMobileBtn.addEventListener("click", () => {
+      if (currentPage > 1) {
+        renderPage(currentPage - 1);
+      }
+    });
+
+    nextPageMobileBtn.addEventListener("click", () => {
+      if (currentPage < pdfDoc.numPages) {
+        renderPage(currentPage + 1);
+      }
+    });
+
+    // Navigation au clavier
+    document.addEventListener("keydown", (e) => {
+      if (pdfModal.classList.contains("hidden")) return;
+      
+      if (e.key === "ArrowLeft" && currentPage > 1) {
+        renderPage(currentPage - 1);
+      } else if (e.key === "ArrowRight" && currentPage < pdfDoc.numPages) {
+        renderPage(currentPage + 1);
+      }
+    });
+
+    // Navigation au swipe/scroll sur mobile
+    let touchStartY = 0;
+    let touchStartX = 0;
+    
+    pdfContainer.addEventListener("touchstart", (e) => {
+      touchStartY = e.touches[0].clientY;
+      touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+
+    pdfContainer.addEventListener("touchend", (e) => {
+      if (pdfModal.classList.contains("hidden")) return;
+      if (window.innerWidth >= 768) return; // Seulement sur mobile
+      
+      const touchEndY = e.changedTouches[0].clientY;
+      const touchEndX = e.changedTouches[0].clientX;
+      
+      const deltaY = touchStartY - touchEndY;
+      const deltaX = Math.abs(touchStartX - touchEndX);
+      
+      console.log("Swipe:", deltaY, "DeltaX:", deltaX); // Debug
+      
+      // Swipe vers le haut = page suivante (30px minimum)
+      if (deltaY > 30 && deltaX < 50 && currentPage < pdfDoc.numPages) {
+        renderPage(currentPage + 1);
+      }
+      // Swipe vers le bas = page précédente (30px minimum)
+      else if (deltaY < -30 && deltaX < 50 && currentPage > 1) {
+        renderPage(currentPage - 1);
+      }
+    }, { passive: true });
+
+    // Fermer en cliquant en dehors du modal
+    pdfModal.addEventListener("click", (e) => {
+      if (e.target === pdfModal) {
+        pdfModal.classList.add("hidden");
+        document.body.style.overflow = "auto";
+      }
+    });
   });
 </script>

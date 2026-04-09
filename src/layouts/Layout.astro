@@ -2,22 +2,55 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+
+const {
+  title = "Lihé – Massage Shinzu et soins énergétiques en Valais",
+  description = "Massage Shinzu et soins énergétiques en Valais.",
+  image = "https://lihe.ch/assets/logo.png"
+} = Astro.props;
+
+const url = Astro.url.href;
 ---
+
 
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-      <!-- Favicon -->
-      <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-      <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
-      <link rel="shortcut icon" href="/favicon.ico" />
-      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <!-- SEO -->
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={url} />
 
-      <title>Mon Bien-Être - Lihé</title>
-    </head>
+  <!-- Open Graph -->
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={url} />
+  <meta property="og:image" content={image} />
+
+  <!-- Données structurées -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "HealthAndBeautyBusiness",
+    "name": "Lihé",
+    "url": "https://lihe.ch",
+    "logo": "https://lihe.ch/assets/logo.png",
+    "description": description,
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "CH"
+    }
+  })} />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+</head>
 
 
   <body class="flex flex-col min-h-screen bg-gray-50">
@@ -41,6 +74,7 @@ import '../styles/global.css';
 
     <!-- Footer GLOBAL -->
     <Footer />
+
 
   </body>
 </html>
