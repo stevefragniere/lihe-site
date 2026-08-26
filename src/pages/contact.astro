@@ -53,27 +53,32 @@ import Layout from '../layouts/Layout.astro';
         <div>
           <label class="font-semibold text-lg mb-4 block">Sélectionnez l'atelier (ou plusieurs) :</label>
           
-          <div class="space-y-3">
-            <label class="flex items-center space-x-3 cursor-pointer p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
-              <input type="checkbox" name="ateliers" value="je m'écoute" class="w-5 h-5 cursor-pointer"/>
-              <span class="text-textmain font-medium">Atelier "Je m'écoute" (mercredi 29 avril 2026)</span>
-            </label>
+            <div class="space-y-3">
+              <label class="flex items-center space-x-3 cursor-not-allowed p-3 border border-gray-300 rounded-lg opacity-60 transition">
+                <input type="checkbox" name="ateliers" value="je m'écoute" class="w-5 h-5 cursor-not-allowed" disabled/>
+                <span class="text-textmain font-medium line-through">Atelier "Je m'écoute" (mercredi 29 avril 2026)</span>
+              </label>
 
-            <label class="flex items-center space-x-3 cursor-pointer p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
-              <input type="checkbox" name="ateliers" value="super héros" class="w-5 h-5 cursor-pointer"/>
-              <span class="text-textmain font-medium">Atelier "Super Héros" (mercredi 27 mai 2026)</span>
-            </label>
+              <label class="flex items-center space-x-3 cursor-not-allowed p-3 border border-gray-300 rounded-lg opacity-60 transition">
+                <input type="checkbox" name="ateliers" value="super héros" class="w-5 h-5 cursor-not-allowed" disabled/>
+                <span class="text-textmain font-medium line-through">Atelier "Super Héros" (mercredi 27 mai 2026)</span>
+              </label>
 
-            <label class="flex items-center space-x-3 cursor-pointer p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
-              <input type="checkbox" name="ateliers" value="rentrée apaisée 17" class="w-5 h-5 cursor-pointer"/>
-              <span class="text-textmain font-medium">Atelier "Une rentrée apaisée" (lundi 17 août 2026)</span>
-            </label>
+              <label class="flex items-center space-x-3 cursor-not-allowed p-3 border border-gray-300 rounded-lg opacity-60 transition">
+                <input type="checkbox" name="ateliers" value="rentrée apaisée 17" class="w-5 h-5 cursor-not-allowed" disabled/>
+                <span class="text-textmain font-medium line-through">Atelier "Une rentrée apaisée" (lundi 17 août 2026)</span>
+              </label>
 
-            <label class="flex items-center space-x-3 cursor-pointer p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
-              <input type="checkbox" name="ateliers" value="rentrée apaisée 18" class="w-5 h-5 cursor-pointer"/>
-              <span class="text-textmain font-medium">Atelier "Une rentrée apaisée" (mardi 18 août 2026)</span>
-            </label>
-          </div>
+              <label class="flex items-center space-x-3 cursor-not-allowed p-3 border border-gray-300 rounded-lg opacity-60 transition">
+                <input type="checkbox" name="ateliers" value="rentrée apaisée 18" class="w-5 h-5 cursor-not-allowed" disabled/>
+                <span class="text-textmain font-medium line-through">Atelier "Une rentrée apaisée" (mardi 18 août 2026)</span>
+              </label>
+
+              <label class="flex items-center space-x-3 cursor-pointer p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                <input type="checkbox" name="ateliers" value="anim-alliés" class="w-5 h-5 cursor-pointer"/>
+                <span class="text-textmain font-medium">Atelier "Super Héros" en collaboration avec anim-alliés (11 novembre 2026)</span>
+              </label>
+            </div>
 
           <p id="ateliers-error" class="text-red-600 text-sm mt-2 opacity-0 transition-opacity">
             Veuillez sélectionner au moins un atelier
