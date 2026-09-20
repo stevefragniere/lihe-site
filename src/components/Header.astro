@@ -28,21 +28,23 @@ import "../styles/global.css";
       <img src="/assets/logo.png" alt="Lihé Logo" class="h-16 w-auto" />
     </a>
 
-    <!-- POPUP BULLE CENTRÉE (vraiment au milieu) -->
-    <div class="absolute left-1/2 -translate-x-1/2">
-      <button
-        id="open-pdf-btn"
-        class="group inline-flex items-center justify-center animate-float-slow cursor-pointer"
-      >
-        <!-- Contenu bulle avec style global -->
-        <div class="bubble group-hover:shadow-lg transition-shadow px-10 py-5">
-          <div class="text-center whitespace-nowrap">
-            <p class="text-base font-bold text-primary">✨ Nouveau ✨</p>
-            <p class="text-base font-semibold">Ateliers enfants</p>
-          </div>
+    {/*
+        <!-- POPUP BULLE CENTRÉE (vraiment au milieu) -->
+        <div class="absolute left-1/2 -translate-x-1/2">
+          <button
+            id="open-pdf-btn"
+            class="group inline-flex items-center justify-center animate-float-slow cursor-pointer"
+          >
+            <!-- Contenu bulle avec style global -->
+            <div class="bubble group-hover:shadow-lg transition-shadow px-10 py-5">
+              <div class="text-center whitespace-nowrap">
+                <p class="text-base font-bold text-primary">✨ Nouveau ✨</p>
+                <p class="text-base font-semibold">Ateliers enfants</p>
+              </div>
+            </div>
+          </button>
         </div>
-      </button>
-    </div>
+    */}
 
     <!-- SPACER pour pousser le reste à droite -->
     <div class="flex-1"></div>
@@ -206,6 +208,7 @@ import "../styles/global.css";
     const closePdfBtn = document.getElementById("close-pdf-btn");
     const pdfModal = document.getElementById("pdf-modal");
     const pdfCanvas = document.getElementById("pdf-canvas");
+    const pdfContainer = document.getElementById("pdf-container");
     const pdfLoading = document.getElementById("pdf-loading");
     const prevPageBtn = document.getElementById("prev-page");
     const nextPageBtn = document.getElementById("next-page");
@@ -262,7 +265,7 @@ import "../styles/global.css";
       }
     }
 
-    openPdfBtn.addEventListener("click", () => {
+    openPdfBtn?.addEventListener("click", () => {
       pdfModal.classList.remove("hidden");
       document.body.style.overflow = "hidden";
       if (!pdfDoc) {
