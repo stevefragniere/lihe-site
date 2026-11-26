@@ -1,0 +1,183 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+// 1) Bons à montant : un Payment Link Stripe par montant
+const montants = [
+  { valeur: 50, url: "https://buy.stripe.com/cNidR26y85iA1CwdTH7ok01" },
+  { valeur: 100, url: "https://buy.stripe.com/4gM14gcWw7qIbd66rf7ok02" },
+  { valeur: 150, url: "https://buy.stripe.com/3cI3co2hS4ewftm5nb7ok03" },
+  { valeur: 200, url: "https://buy.stripe.com/14A8wI4q06mE5SM4j77ok04" },
+];
+
+// 2) Packs : PDF de l'offre affiché sur la page + Payment Link Stripe
+const packs = [
+  { nom: "Pack Twice", pdf: "/PackTwice.pdf", url: "https://buy.stripe.com/cNi28k8Gg12k6WQ02R7ok05" },
+  { nom: "Pack 4 saisons", pdf: "/Pack4saisons.pdf", url: "https://buy.stripe.com/5kQcMYf4EfXe4OIaHv7ok06" },
+  { nom: "Pack Éveil", pdf: "/PackEveil.pdf", url: "https://buy.stripe.com/fZudR26y85iA0ys4j77ok07"},
+];
+---
+
+<Layout title="Bons cadeaux | Lihé">
+  <section class="max-w-5xl mx-auto py-16 px-4">
+    <h1 class="text-4xl font-bold text-textmain text-center mb-4">Bons cadeaux</h1>
+    <p class="text-center text-textmain max-w-2xl mx-auto mb-12">
+      Offrez un moment de bien-être. Après le paiement sécurisé, vous pouvez
+      télécharger immédiatement votre bon au format PDF.
+    </p>
+
+    <!-- BONS À MONTANT -->
+    <section class="mb-16 text-center">
+      <p class="text-lg font-semibold text-textmain mb-4">Choisissez votre bon :</p>
+      <div class="flex flex-wrap justify-center gap-3">
+        {
+          montants.map((m) => (
+            <a
+              href={m.url}
+              class="px-5 py-2 border border-primary rounded-full text-sm font-medium text-textmain hover:bg-primary hover:text-white transition"
+            >
+              {m.valeur} CHF
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- PACKS -->
+    <section>
+      <h2 class="text-xl font-semibold text-textmain mb-6 text-center">🎁  Offres de Noël  🎄</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {
+          packs.map((p) => (
+            <div class="flex flex-col items-center">
+              <button
+                type="button"
+                class="pack-preview w-full bg-white rounded-lg shadow-md overflow-hidden cursor-zoom-in hover:shadow-lg transition"
+                data-pdf={p.pdf}
+                aria-label={`Agrandir l'offre ${p.nom}`}
+              >
+                <canvas class="w-full h-auto block" />
+                <span class="pack-loading block py-16 text-sm text-gray-500">Chargement…</span>
+              </button>
+              <p class="text-xs text-gray-500 mt-2">Cliquer pour agrandir</p>
+              <a
+                href={p.url}
+                class="mt-4 px-6 py-2 bg-primary text-white rounded-lg hover:opacity-90 transition font-semibold"
+              >
+                Acheter
+              </a>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+  </section>
+
+  <!-- AGRANDISSEMENT (déplacé dans <body> par le script pour passer au-dessus du header) -->
+  <div id="pack-modal" class="hidden fixed inset-0 bg-black/70 z-[60] overflow-y-auto">
+    <button
+      id="pack-modal-close"
+      type="button"
+      class="fixed top-4 right-4 w-10 h-10 rounded-full bg-white text-xl font-bold text-textmain shadow-lg z-[70]"
+      aria-label="Fermer"
+    >
+      ✕
+    </button>
+    <div id="pack-modal-content" class="max-w-3xl mx-auto p-4 pt-16"></div>
+  </div>
+</Layout>
+
+<script is:inline>
+  (function () {
+    const ready = () =>
+      new Promise((resolve) => {
+        if (window.pdfjsLib) return resolve();
+        const t = setInterval(() => {
+          if (window.pdfjsLib) {
+            clearInterval(t);
+            resolve();
+          }
+        }, 100);
+      });
+
+    ready().then(() => {
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+      const docs = {};
+      const getDoc = (url) => (docs[url] = docs[url] || pdfjsLib.getDocument(url).promise);
+
+      async function renderPage(doc, num, canvas, cssWidth) {
+        const page = await doc.getPage(num);
+        const base = page.getViewport({ scale: 1 });
+        const scale = (cssWidth / base.width) * Math.min(window.devicePixelRatio || 1, 2);
+        const viewport = page.getViewport({ scale });
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        await page.render({ canvasContext: canvas.getContext("2d"), viewport }).promise;
+      }
+
+      // Aperçus (page 1), chargés quand ils deviennent visibles
+      const previews = document.querySelectorAll(".pack-preview");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(async (entry) => {
+            if (!entry.isIntersecting) return;
+            observer.unobserve(entry.target);
+            const btn = entry.target;
+            try {
+              const doc = await getDoc(btn.dataset.pdf);
+              await renderPage(doc, 1, btn.querySelector("canvas"), 500);
+              btn.querySelector(".pack-loading").remove();
+            } catch (e) {
+              console.error(e);
+              btn.querySelector(".pack-loading").textContent = "Aperçu indisponible";
+            }
+          });
+        },
+        { rootMargin: "200px" }
+      );
+      previews.forEach((b) => observer.observe(b));
+
+      // Agrandissement : toutes les pages du PDF
+      const modal = document.getElementById("pack-modal");
+      const content = document.getElementById("pack-modal-content");
+      document.body.appendChild(modal);
+
+      const close = () => {
+        modal.classList.add("hidden");
+        document.body.style.overflow = "";
+      };
+
+      previews.forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          content.innerHTML = '<p class="text-white text-center">Chargement…</p>';
+          modal.classList.remove("hidden");
+          modal.scrollTop = 0;
+          document.body.style.overflow = "hidden";
+          try {
+            const doc = await getDoc(btn.dataset.pdf);
+            content.innerHTML = "";
+            const width = Math.min(window.innerWidth - 32, 900);
+            for (let i = 1; i <= doc.numPages; i++) {
+              const canvas = document.createElement("canvas");
+              canvas.className = "w-full h-auto bg-white rounded shadow mb-4";
+              content.appendChild(canvas);
+              await renderPage(doc, i, canvas, width);
+            }
+          } catch (e) {
+            console.error(e);
+            content.innerHTML = '<p class="text-white text-center">Impossible d\'afficher le PDF.</p>';
+          }
+        });
+      });
+
+      document.getElementById("pack-modal-close").addEventListener("click", close);
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal || e.target === content) close();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") close();
+      });
+    });
+  })();
+</script>

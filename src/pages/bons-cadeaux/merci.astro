@@ -1,0 +1,52 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Merci | Lihé" noindex={true}>
+  <section class="max-w-xl mx-auto py-16 px-4 text-center">
+    <h1 class="text-3xl font-bold text-primary mb-4">Merci pour votre achat !</h1>
+    <p class="text-textmain mb-8">
+      Votre paiement a bien été reçu. Vous pouvez télécharger votre bon
+      ci-dessous. Un reçu vous a également été envoyé par e-mail.
+    </p>
+
+    <a
+      id="download-btn"
+      href="#"
+      download
+      class="hidden inline-block px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:opacity-90 transition"
+    >
+      Télécharger mon bon
+    </a>
+
+    <p id="error-msg" class="hidden text-textmain">
+      Nous n'avons pas pu identifier votre bon. Écrivez-nous via la page
+      <a href="/contact" class="underline text-primary">Contact</a>
+      avec votre reçu et nous vous l'enverrons.
+    </p>
+  </section>
+</Layout>
+
+<script is:inline>
+  // ?bon=<code aléatoire> (voir la correspondance dans les redirections Stripe)
+  const fichiers = {
+    "f876f1fd78": "/Bon50chf-78ffd3f7.pdf",
+    "a9d7434149": "/Bon100chf-90ad4fbd.pdf",
+    "57bd0db473": "/Bon150chf-279b8b7c.pdf",
+    "1c4a9d7768": "/Bon200chf-e049b294.pdf",
+    "7e5ec88333": "/BonPackTwice-ccdc7d5a.pdf",
+    "8386f8bdc3": "/BonPack4saisons-232cb1bf.pdf",
+    "ef58d8370a": "/BonPackEveil-7ef5b2b3.pdf",
+  };
+
+  const bon = new URLSearchParams(window.location.search).get("bon");
+  const fichier = fichiers[bon];
+
+  if (fichier) {
+    const btn = document.getElementById("download-btn");
+    btn.href = fichier;
+    btn.classList.remove("hidden");
+  } else {
+    document.getElementById("error-msg").classList.remove("hidden");
+  }
+</script>
